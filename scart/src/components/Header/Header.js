@@ -11,12 +11,14 @@ const header = props => (
       <Link className={bootstrap['navbar-brand']} to="/"><img src={logo} alt='site logo' title="Logo" width="50" />Shop</Link>
       <Nav cssModule={bootstrap} className="ml-auto" navbar>
         <NavItem>
-          <Link className={bootstrap["nav-link"]} to="/user-list">User List</Link>
+          <Link className={bootstrap["nav-link"]} to="/">Shop</Link>
         </NavItem>
         <NavItem>
-          <Link className={bootstrap["nav-link"]} to="/add-user">Add User</Link>
+          <Link className={bootstrap["nav-link"]} to="/cart/">Cart</Link>
         </NavItem>
-
+        <NavItem>
+          <Link className={bootstrap["nav-link"]} to="/checkout/">Checkout</Link>
+        </NavItem>
       </Nav>
     </Navbar>
 
