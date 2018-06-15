@@ -1,0 +1,22 @@
+.Product {
+    margin-bottom: 30px;
+}
+.Product h6 {
+    margin: 10px;
+}
+.saleTag {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    background: #007bff;
+    color: #fff;
+    padding: 0 11px;
+}
+.out-of-stock {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    background: #f43a0c;
+    color: #fff;
+    padding: 0 11px;
+}
