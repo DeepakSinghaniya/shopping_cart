@@ -1,1 +1,3 @@
 export const INITIAL_LOAD_PRODUCTS = 'INITIAL_LOAD_PRODUCTS';
+export const SHOW_LOADER = 'SHOW_LOADER';
+export const HIDE_LOADER = 'HIDE_LOADER';

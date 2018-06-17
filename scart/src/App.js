@@ -6,11 +6,12 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Shop from './containers/Shop/Shop';
 import Cart from './containers/Cart/Cart';
+import classes from './App.scss';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className={classes.App}>
 
         <Header />
         <div className="content">
