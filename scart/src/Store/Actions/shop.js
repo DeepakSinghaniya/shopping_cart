@@ -1,5 +1,6 @@
-import {INITIAL_LOAD_PRODUCTS} from './actionsTypes';
+import {INITIAL_LOAD_PRODUCTS, SHOW_LOADER, HIDE_LOADER} from './actionsTypes';
 import http  from '../../http/http';
+import {PER_PAGE} from '../../utility/config';
 
 export const fatchProducts = (data) => {
     return {
@@ -7,11 +8,26 @@ export const fatchProducts = (data) => {
         payLoad: data
     };
 }
+export const showLoader = () => {
+    return {
+        type: SHOW_LOADER,
+    };
+}
 
-export const initialLoadProducts = () => {
+export const hideLoader = () => {
+    return {
+        type: HIDE_LOADER,
+    };
+}
+
+export const initialLoadProducts = (offset) => {
     return (dispatch, getStore) => {
-        http.get('/products/?per_page=20').then(responce => {
-            dispatch(fatchProducts(responce.data));
+		dispatch(showLoader());
+        http.get('/products/?per_page='+PER_PAGE+'&offset='+offset).then(responce => {
+			if(responce.status === 200) {
+				dispatch(fatchProducts(responce.data));
+			}
+			dispatch(hideLoader());
         });
     }
 } 
