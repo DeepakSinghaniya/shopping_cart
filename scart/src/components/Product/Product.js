@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 import './Product.scss';
 
 const product = (props) => {
-    console.log(props.images);
     return (
         <Card className={['text-center', 'Product'].join(' ')}>
             <Link to={props.slug}>

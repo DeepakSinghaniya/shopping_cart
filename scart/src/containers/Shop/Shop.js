@@ -58,6 +58,7 @@ const mapStoreToProps = store => {
         offset: store.shop.offset
     }
 }
+
 const mapDispatchToProps = dispatch => {
     return {
         initProducts: (offset) => dispatch(initialLoadProducts(offset))

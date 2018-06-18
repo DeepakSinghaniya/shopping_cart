@@ -6,7 +6,6 @@ const initialState = {
 	offset: 0
 }
 const shopReducer = (state = initialState, action) => {
-    console.log(action.payLoad);
     switch(action.type) {
         case INITIAL_LOAD_PRODUCTS:
 		let productCount = state.offset + action.payLoad.length;
