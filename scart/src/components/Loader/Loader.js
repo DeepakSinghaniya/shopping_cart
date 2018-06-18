@@ -1,9 +1,9 @@
 import React from 'react';
-import classes from './Loader.scss';
+import './Loader.scss';
 
 const loader = (props) => {
 	
-	const loaderElement = props.show?  <div className={classes.backDrop}> <div className={classes.loader}>Loading...</div> </div> : null;
+	const loaderElement = props.show?  <div className='backDrop'> <div className='loader'>Loading...</div> </div> : null;
 	
 	return loaderElement;
 }
