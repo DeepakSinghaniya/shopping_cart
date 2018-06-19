@@ -145,3 +145,20 @@
          padding-bottom: 15px;
      }
   }
+
+  .product-categories {
+    li {
+      cursor: pointer;
+    }
+    li.active > span {
+      color: var(--primary)
+    }
+    
+  }
+  .range-filter {
+    padding-right: 15px;
+    padding-left: 15px;
+    h4 {
+      margin-left: -15px;
+    }
+  }

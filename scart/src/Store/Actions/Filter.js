@@ -1,4 +1,4 @@
-import {GET_PRODUCT_CATEGORIES} from './actionsTypes';
+import {GET_PRODUCT_CATEGORIES, FILTERED_QUERY} from './actionsTypes';
 import http  from '../../http/http';
 
 export const fatchProductCateories = (data) => {
@@ -8,7 +8,7 @@ export const fatchProductCateories = (data) => {
     };
 }
 
-export const initialLoadCategories = (offset) => {
+export const initialLoadCategories = () => {
     return (dispatch, getStore) => {
         http.get('/products/categories/?orderby=name&exclude=15').then(responce => {
 			if(responce.status === 200) {
@@ -17,3 +17,14 @@ export const initialLoadCategories = (offset) => {
         });
     }
 } 
+
+
+
+
+
+export const filteredQuery = (query) => {
+    return {
+        type: FILTERED_QUERY,
+        payLoad: query
+    };
+}

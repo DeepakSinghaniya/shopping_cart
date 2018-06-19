@@ -1,50 +1,69 @@
 import React, { Component } from 'react';
 import { Form, Input } from 'reactstrap';
 import InputRange from 'react-input-range';
-import { initialLoadCategories } from '../../Store/Actions';
+import { initialLoadCategories, filteredQuery, initialLoadProducts } from '../../Store/Actions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-//import { stringify } from 'query-string';
 import 'react-input-range/lib/css/index.css';
 import './Filter.scss';
+import { MAX_PRICE, MIN_PRICE } from '../../utility/config';
 
-/*
-this.props.push({
-    pathname: this.props.location.pathname,
-    search: stringifyQuery(Object.assign({}, parseQueryString(this.props.location.search), { foo: "bar" }))
-  });
-*/
+
 class Filter extends Component {
     state = {
-        value: { min: 0, max: 100 },
+        value: { min: MIN_PRICE, max: MAX_PRICE },
+        sliderInit: {
+            min_price: MIN_PRICE,
+            max_price: MAX_PRICE
+        },
         queryString: {
             search: '',
             category: '',
-            min_price: '',
-            max_price: ''
-        }
-
+            min_price: MIN_PRICE,
+            max_price: MAX_PRICE
+        },
+        timeOutId: null
     }
+
     componentDidMount() {
         if (!this.props.cats.length) {
-            this.props.loatCat();
+            this.props.loadCat();
         }
     }
-    searchHandler = (e) => {
-        this.setState({ queryString: { ...this.state.queryString, search: e.target.value } });
 
-        /*const search = this.props.location.search; // could be '?foo=bar'
-        const params = new URLSearchParams(search);
-        console.log(this.props);
-        console.log(stringify({ ...this.state.queryString }));
-        //const foo = params.get('foo');*/
-
-
-        /*this.props.history.push({
-            pathname: this.props.location.pathname,
-            search:  stringify({ ...this.state.queryString })
-        });*/
+    sliderChangeCompleteHandler = (value) => {
+        this.setState({ queryString: { ...this.state.queryString, min_price: value.min, max_price: value.max } }, () => {
+            this.props.filteredQuery(this.state.queryString);
+            this.props.initProducts(0);
+        });
     }
+
+
+
+    searchHandler = (e) => {
+        this.setState({ queryString: { ...this.state.queryString, search: e.target.value } }, () => {
+            clearTimeout(this.state.timeOutId);
+            this.setState({
+                timeOutId: setTimeout(() => {
+                    this.props.filteredQuery(this.state.queryString);
+                    this.props.initProducts(0);
+                }, 800)
+            });
+
+        });
+
+    }
+
+    catFilterHandler = (e, id) => {
+        e.stopPropagation();
+        this.setState({ queryString: { ...this.state.queryString, category: id } }, () => {
+            this.props.filteredQuery(this.state.queryString);
+            this.props.initProducts(0);
+        });
+    }
+
+
+
     render() {
         return (
             <div className="product-filter-sidebar">
@@ -54,22 +73,32 @@ class Filter extends Component {
                         <Input onChange={this.searchHandler} value={this.state.queryString.search} type="search" placeholder="Search" />
                     </Form>
                 </div>
-                <div className="filter-widget">
+                <div className="filter-widget range-filter">
                     <h4>Filter by price</h4>
-                    <InputRange maxValue={100}
-                        minValue={0}
+                    <InputRange
+                        maxValue={this.state.sliderInit.max_price}
+                        minValue={this.state.sliderInit.min_price}
                         value={this.state.value}
-                        onChange={value => this.setState({ value })} />
+                        onChange={value => this.setState({ value })}
+                        formatLabel={value => `₹${value}`}
+                        onChangeComplete={this.sliderChangeCompleteHandler}
+                    />
                 </div>
+
+         
+
+
+
 
                 <div className="filter-widget">
                     <h4>Product categories</h4>
                     <ul className="product-categories">
+                        <li className={this.state.queryString.category? '': 'active'} onClick={(e) => this.catFilterHandler(e, null)}>All</li>
                         {this.props.cats.map(cat => {
-                            return ((cat.parent === 0) ? <li key={cat.id}><a>{cat.name}</a>
+                            return ((cat.parent === 0) ? <li className={this.state.queryString.category === cat.id? 'active': ''} onClick={(e) => this.catFilterHandler(e, cat.id)} key={cat.id}><span>{cat.name}</span>
                                 <ul>
                                     {this.props.cats.map(childCat => {
-                                        return ((childCat.parent === cat.id) ? <li key={childCat.id}><a>{childCat.name}</a></li> : null);
+                                        return ((childCat.parent === cat.id) ? <li className={this.state.queryString.category === childCat.id? 'active': ''} onClick={(e) => this.catFilterHandler(e, childCat.id)} key={childCat.id}><span>{childCat.name}</span></li> : null);
                                     })}
                                 </ul>
                             </li> : null);
@@ -83,12 +112,14 @@ class Filter extends Component {
 }
 const mapStoreToProps = (store) => {
     return {
-        cats: store.filter.categories
+        cats: store.filter.categories,
     };
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        loatCat: () => dispatch(initialLoadCategories())
+        loadCat: () => dispatch(initialLoadCategories()),
+        filteredQuery: (query) => dispatch(filteredQuery(query)),
+        initProducts: (offset) => dispatch(initialLoadProducts(offset))
     }
 }
 export default connect(mapStoreToProps, mapDispatchToProps)(withRouter(Filter));
