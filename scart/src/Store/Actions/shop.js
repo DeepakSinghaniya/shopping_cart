@@ -1,6 +1,5 @@
-import {INITIAL_LOAD_PRODUCTS, SHOW_LOADER, HIDE_LOADER, LOAD_MORE} from './actionsTypes';
-import http  from '../../http/http';
-import { stringify } from 'query-string';
+import {INITIAL_LOAD_PRODUCTS, SHOW_LOADER, HIDE_LOADER, LOAD_MORE, GET_SHORT} from './actionsTypes';
+import {get}  from '../../http/http';
 import {PER_PAGE} from '../../utility/config';
 export const fatchProducts = (data) => {
     return {
@@ -29,9 +28,10 @@ export const initialLoadProducts = (offset) => {
                 delete query[key]
             }
         }); 
-        const queryString = stringify({...query, per_page: PER_PAGE, offset: offset});
+
+        const querydata = {...query, per_page: PER_PAGE, offset: offset};
 		dispatch(showLoader());
-        http.get('/products/?'+queryString).then(responce => {
+        get('/products/', querydata).then(responce => {
 			if(responce.status === 200) {
 				dispatch(fatchProducts(responce.data));
 			}
@@ -57,13 +57,23 @@ export const loadMore = (offset) => {
                 delete query[key]
             }
         }); 
-        const queryString = stringify({...query, per_page: PER_PAGE, offset: offset});
+        const queryData = {...query, per_page: PER_PAGE, offset: offset};
 		dispatch(showLoader());
-        http.get('/products/?'+queryString).then(responce => {
+        get('/products/', queryData).then(responce => {
 			if(responce.status === 200) {
 				dispatch(loadMoreProducts(responce.data));
 			}
 			dispatch(hideLoader());
         });
     }
+}
+
+
+
+
+export const getShort = (short) => {
+    return {
+        type: GET_SHORT,
+        payLoad: short
+    };
 }

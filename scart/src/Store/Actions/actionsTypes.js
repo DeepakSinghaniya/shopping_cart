@@ -4,3 +4,4 @@ export const HIDE_LOADER = 'HIDE_LOADER';
 export const GET_PRODUCT_CATEGORIES = "GET_PRODUCT_CATEGORIES";
 export const FILTERED_QUERY = "FILTERED_QUERY";
 export const LOAD_MORE = "LOAD_MORE";
+export const GET_SHORT = 'GET_SHORT';

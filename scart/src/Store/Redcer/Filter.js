@@ -1,4 +1,4 @@
-import { GET_PRODUCT_CATEGORIES, FILTERED_QUERY } from '../Actions/actionsTypes';
+import { GET_PRODUCT_CATEGORIES, FILTERED_QUERY, GET_SHORT } from '../Actions/actionsTypes';
 
 const initialState = {
     categories: [],
@@ -12,6 +12,9 @@ const filterReducer = (state = initialState, action) => {
             
         case FILTERED_QUERY:
             return { ...state, query: action.payLoad }
+
+        case GET_SHORT:
+        return {...state, query: {...state.query, ...action.payLoad}}
 
         default:
             return state;

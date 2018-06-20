@@ -19,8 +19,8 @@ class Filter extends Component {
         queryString: {
             search: '',
             category: '',
-            min_price: MIN_PRICE,
-            max_price: MAX_PRICE
+            min_price: 0,
+            max_price: 0
         },
         timeOutId: null
     }
@@ -93,7 +93,7 @@ class Filter extends Component {
                 <div className="filter-widget">
                     <h4>Product categories</h4>
                     <ul className="product-categories">
-                        <li className={this.state.queryString.category? '': 'active'} onClick={(e) => this.catFilterHandler(e, null)}>All</li>
+                        <li className={this.state.queryString.category? '': 'active'} onClick={(e) => this.catFilterHandler(e, null)}><span>All</span></li>
                         {this.props.cats.map(cat => {
                             return ((cat.parent === 0) ? <li className={this.state.queryString.category === cat.id? 'active': ''} onClick={(e) => this.catFilterHandler(e, cat.id)} key={cat.id}><span>{cat.name}</span>
                                 <ul>
