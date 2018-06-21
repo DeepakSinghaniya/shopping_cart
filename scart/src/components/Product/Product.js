@@ -7,7 +7,7 @@ import './Product.scss';
 const product = (props) => {
     return (
         <Card className={['text-center', 'Product'].join(' ')}>
-            <Link to={props.slug}>
+            <Link to={'products/'+props.id}>
             <CardImg top width="100%" src={props.images[0].src} alt="Card image cap" />
             </Link>
             <CardBody>

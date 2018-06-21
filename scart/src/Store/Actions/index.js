@@ -1,2 +1,3 @@
-export {initialLoadProducts, loadMore, getShort} from './shop';
-export {initialLoadCategories, filteredQuery} from './Filter';
+export {initialLoadProducts, loadMore, showLoadMore} from './shop';
+export {initialLoadCategories, setQuery} from './Filter';
+export {getSingleProduct, setSingleProduct} from './singleProduct';

@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import shopReducer from './Store/Redcer/Shop';
 import filterReducer from './Store/Redcer/Filter';
+import singleProductReducer from './Store/Redcer/SingleProduct';
 import registerServiceWorker from './registerServiceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -15,7 +16,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     shop: shopReducer,
-    filter: filterReducer
+    filter: filterReducer,
+    sinPro: singleProductReducer
 });
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 const appObj = <Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider>;

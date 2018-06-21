@@ -1,4 +1,4 @@
-import {GET_PRODUCT_CATEGORIES, FILTERED_QUERY} from './actionsTypes';
+import {GET_PRODUCT_CATEGORIES, SET_QUERY} from './actionsTypes';
 import {get}  from '../../http/http';
 
 export const fatchProductCateories = (data) => {
@@ -18,9 +18,10 @@ export const initialLoadCategories = () => {
     }
 } 
 
-export const filteredQuery = (query) => {
+
+export const setQuery = (query) => {
     return {
-        type: FILTERED_QUERY,
+        type: SET_QUERY,
         payLoad: query
-    };
-}
+    }
+} 
