@@ -1,0 +1,23 @@
+.grouped-product {
+    label {
+        display: block;
+        clear: both;
+        overflow: hidden;
+        min-width: 430px;
+        width: 50%;
+        margin-bottom: 30px;
+        .product-name {
+            float: left;
+            margin-right: 30px;
+            min-width: 200px;
+        }
+        .form-control {
+            float: left;
+            width: 80px;
+            margin-right: 20px;
+        }
+        .price-name {
+            float: left;
+        }
+    }
+}

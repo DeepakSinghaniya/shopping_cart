@@ -1,47 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import {
-    Row,
-    Col,
-    Button,
-    Carousel,
-    CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption
-} from 'reactstrap';
+import { Row, Col, Button, Input, Label } from 'reactstrap';
 import renderHTML from 'react-render-html';
-import { getSingleProduct, setSingleProduct } from '../../Store/Actions/';
+import { getSingleProduct, setSingleProduct, setProductsReadyToCart, setProductCount } from '../../Store/Actions/';
 import Loader from '../../components/Loader/Loader';
+import withErrorHandler from '../../HOC/withHttpErrorHandler';
+import axios from '../../http/http';
+import ProductCarousel from './ProductCarousel/ProductCarousel';
+import './SingleProduct.scss';
 
 
 class SingleProduct extends Component {
-
-    state = { activeIndex: 0 };
-    onExiting = () => {
-        this.animating = true;
-    }
-
-    onExited = () => {
-        this.animating = false;
-    }
-
-    next = () => {
-        if (this.animating) return;
-        const nextIndex = this.state.activeIndex === this.props.product.images.length - 1 ? 0 : this.state.activeIndex + 1;
-        this.setState({ activeIndex: nextIndex });
-    }
-
-    previous = () => {
-        if (this.animating) return;
-        const nextIndex = this.state.activeIndex === 0 ? this.props.product.images.length - 1 : this.state.activeIndex - 1;
-        this.setState({ activeIndex: nextIndex });
-    }
-
-    goToIndex = (newIndex) => {
-        if (this.animating) return;
-        this.setState({ activeIndex: newIndex });
-    }
+    productReadyFlag = true;
 
     componentDidMount = () => {
         if (this.props.products.length) {
@@ -51,52 +21,58 @@ class SingleProduct extends Component {
         } else {
             this.props.getSingleProduct(+this.props.match.params.slug);
         }
+
+    }
+    componentWillReceiveProps() {
+        if (this.props.product) {
+            const gropuedProduct = {};
+            this.props.product.grouped_products.map(item => {
+                gropuedProduct[item] = { count: 0 }
+                return null;
+            });
+            if(this.productReadyFlag) {
+                this.productReadyFlag = false;
+                this.props.setProductsReadyToCart({ ...gropuedProduct });
+            }
+        }
     }
 
+    
+    gropedProductHandler = (e, id) => {
+        let value = e.target.value;
+        if(value < 0) {
+            value = 0;
+        }
+        this.props.setProductCount({id: id, value: value});
+    }
     render() {
         if (this.props.product) {
-            const { activeIndex } = this.state;
-            const slides = this.props.product.images.map((item) => {
                 return (
-                    <CarouselItem
-                        onExiting={this.onExiting}
-                        onExited={this.onExited}
-                        key={item.src}
-                    >
-                        <img src={item.src} alt={item.altText} />
-                        <CarouselCaption />
-                    </CarouselItem>
+                    <Fragment>
+                        <Row>
+                            <Col md={4}>
+                                <ProductCarousel items={this.props.product.images} />
+                            </Col>
+                            <Col>
+                                <h1>{this.props.product.name}</h1>
+                                {this.props.product.on_sale ? <Button disabled color="success" >Sale!</Button> : null}
+                                <h3>{renderHTML(this.props.product.price_html)}</h3>
+                                {!this.props.product.in_stock && !this.props.product.manage_stock ? <span className='out-of-stock'>Out of stock!</span> : null}
+                                {this.props.product.type === 'grouped' && this.props.readyToCart && <div className="grouped-product">
+                                    <p>This is a grouped product.</p>
+                                    {Object.keys(this.props.readyToCart).length && this.props.product.grouped_products.map(item => {
+                                        return <Label key={item}><Input type="number" onChange={(e) => this.gropedProductHandler(e, item)} value={this.props.readyToCart[item].count} /> <span className="product-name">{this.props.readyToCart[item].product  && this.props.readyToCart[item].product.name}</span> <span className="price-name">{this.props.readyToCart[item].product  && renderHTML(this.props.readyToCart[item].product.price_html)}</span></Label>
+                                    })}
+                                </div>}
+    
+                            </Col>
+                        </Row>
+                    </Fragment>
                 );
-            });
-            return (
-                <Fragment>
-                    <Row>
-                        <Col md={4}>
-                            <Carousel
-                                activeIndex={activeIndex}
-                                next={this.next}
-                                previous={this.previous}
-                            >
-                                <CarouselIndicators items={this.props.product.images} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
-                                {slides}
-                                <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
-                                <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
-                            </Carousel>
-                        </Col>
-                        <Col>
-                            <h1>{this.props.product.name}</h1>
-                            {this.props.product.on_sale ? <Button disabled color="success" >Sale!</Button> : null}
-                            <h3>{renderHTML(this.props.product.price_html)}</h3>
-                            {!this.props.product.in_stock && !this.props.product.manage_stock ? <span className='out-of-stock'>Out of stock!</span> : null}
-                            {this.props.product.type === 'grouped'? <p>This is a grouped product.</p>: null}
-
-                        </Col>
-                    </Row>
-                    <Loader show={this.props.loader} />
-                </Fragment>
-            );
+         
+            
         }
-        return null;
+        return <Loader show={this.props.loader} />;
     };
 
 
@@ -105,14 +81,17 @@ class SingleProduct extends Component {
 const mapStoreToProps = store => {
     return {
         products: store.shop.products,
+        product: store.sinPro.product,
+        readyToCart: store.sinPro.productReadyToCart,
         loader: store.shop.loader,
-        product: store.sinPro.product
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         getSingleProduct: (id) => dispatch(getSingleProduct(id)),
-        setSingleProduct: (product) => dispatch(setSingleProduct(product))
+        setSingleProduct: (product) => dispatch(setSingleProduct(product)),
+        setProductsReadyToCart: (data) => dispatch(setProductsReadyToCart(data)), 
+        setProductCount: (data) => dispatch(setProductCount(data))
     }
 }
-export default connect(mapStoreToProps, mapDispatchToProps)(SingleProduct);
+export default connect(mapStoreToProps, mapDispatchToProps)(withErrorHandler(SingleProduct, axios));

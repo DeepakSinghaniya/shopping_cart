@@ -5,3 +5,9 @@ img {
 	max-width: 100%;
 	height: auto;
 }
+.carousel-indicators li {
+	background-color: var(--blue);
+}
+.carousel-control-prev, .carousel-control-next {
+	opacity: 1;
+}
