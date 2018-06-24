@@ -9,10 +9,7 @@ TabContent,
 TabPane, 
 Nav, 
 NavItem, 
-NavLink,
-Card, 
-CardTitle, 
-CardText} from 'reactstrap';
+NavLink} from 'reactstrap';
 import renderHTML from 'react-render-html';
 import { getSingleProduct, setSingleProduct, setProductsReadyToCart, setProductCount } from '../../Store/Actions/';
 import Loader from '../../components/Loader/Loader';
