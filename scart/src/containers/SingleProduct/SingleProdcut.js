@@ -19,8 +19,6 @@ import ProductCarousel from './ProductCarousel/ProductCarousel';
 import './SingleProduct.scss';
 import classnames from 'classnames';
 
-
-
 class SingleProduct extends Component {
     productReadyFlag = true;
 	state = {
