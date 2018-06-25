@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { initialLoadProducts, loadMore, setQuery, showLoadMore } from '../../Store/Actions';
+import { initialLoadProducts, loadMore, setQuery, showLoadMore,addToCart } from '../../Store/Actions';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Input } from 'reactstrap';
 import { chunk } from '../../utility/utility';
@@ -40,7 +40,7 @@ class Shop extends Component {
                 return (
                     <Row key={index}>
                         {productsRow.map(product => {
-                            return (<Col md={4} key={product.id}><Product {...product} /></Col>);
+                            return (<Col md={4} key={product.id}><Product addToCart={this.props.addToCart} product = {product} /></Col>);
                         })}
                     </Row>
                 );
@@ -100,7 +100,8 @@ const mapDispatchToProps = dispatch => {
         initProducts: (offset) => dispatch(initialLoadProducts(offset)),
         loadMore: (offset) => dispatch(loadMore(offset)),
         setQuery: (query) => dispatch(setQuery(query)),
-        showLoadMoreButton: (show) => dispatch(showLoadMore(show))
+        showLoadMoreButton: (show) => dispatch(showLoadMore(show)),
+        addToCart: (items) => dispatch(addToCart(items))
     }
 }
 export default withErrorHandler(connect(mapStoreToProps, mapDispatchToProps)(Shop), httpInstance);

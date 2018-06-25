@@ -21,7 +21,7 @@ const singleProductReducer = (state = initialState, action) => {
         return {...state, productReadyToCart: {...state.productReadyToCart, ...action.payLoad}}
 
         case SET_PRODUCT_COUNT: 
-        return {...state, productReadyToCart: {...state.productReadyToCart, [action.payLoad.id]: {...state.productReadyToCart[action.payLoad.id], count: action.payLoad.value}}};
+        return {...state, productReadyToCart: {...state.productReadyToCart, [action.payLoad.id]: {...state.productReadyToCart[action.payLoad.id], count: +action.payLoad.value}}};
 
         case SET_PRODUCTS_NAME:
         const payLoad = createNameObj(action.payLoad, state.productReadyToCart);
