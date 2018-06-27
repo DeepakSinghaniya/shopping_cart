@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer';
 import Shop from './containers/Shop/Shop';
 import SingleProdcut from './containers/SingleProduct/SingleProdcut';
 import Cart from './containers/Cart/Cart';
+import Login from './containers/Login/Login';
 import './App.scss';
 
 class App extends Component {
@@ -22,8 +23,8 @@ class App extends Component {
                   <Route exact path='/' component={Shop} />
                   <Route path='/products/:slug' component={SingleProdcut} />
                   <Route path='/cart' component={Cart} />
+                  <Route path='/login' component={Login} />
                 </Switch>
-
               </Col>
             </Row>
           </Container>

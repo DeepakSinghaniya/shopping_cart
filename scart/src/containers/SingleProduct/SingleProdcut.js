@@ -152,6 +152,7 @@ class SingleProduct extends Component {
 
                         </Col>
                     </Row>
+                    <Loader show={this.props.loader} />
                 </Fragment>
             );
 

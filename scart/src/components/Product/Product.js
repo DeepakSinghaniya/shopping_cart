@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, CardImg, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
+import {withRouter} from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import {Link} from 'react-router-dom';
 import './Product.scss';
@@ -16,9 +17,9 @@ const product = (props) => {
                 <CardSubtitle>{renderHTML(props.product.price_html)}</CardSubtitle>
                 {!props.product.in_stock && !props.product.manage_stock?<span className='out-of-stock'>Out of stock!</span>:null}
                 {props.product.type === 'grouped'?
-                <Button color="primary">View products</Button>:
+                <Button onClick={() => props.history.push('/products/'+ props.product.id)} color="primary">View products</Button>:
                 props.product.type === 'variable'? 
-                <Button color="primary">Select options</Button>:
+                <Button onClick={() => props.history.push('/products/'+ props.product.id)} color="primary">Select options</Button>:
                 props.product.type === 'external'?<Button color="link" className='external-link' >{props.product.button_text}</Button>:
                 <Button onClick={() => {props.addToCart({[props.product.id] : {count: 1, product: props.product}})}} color="primary">Add to cart</Button>}
             </CardBody>
@@ -26,4 +27,4 @@ const product = (props) => {
     );
 }
 
-export default product;
+export default withRouter(product);

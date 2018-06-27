@@ -42,4 +42,3 @@ export const get = (path, data) => {
 
 
 export default axiosInstance;
-

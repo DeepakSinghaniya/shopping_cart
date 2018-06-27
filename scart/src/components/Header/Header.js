@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../logo.svg';
 import { Navbar, Nav, NavItem } from 'reactstrap';
+import CartCount from '../../containers/CartCount/CartCount';
 import { Link } from 'react-router-dom';
 
 const header = props => (
@@ -13,10 +14,13 @@ const header = props => (
           <Link className="nav-link" to="/">Shop</Link>
         </NavItem>
         <NavItem>
-          <Link className="nav-link" to="/cart/">Cart</Link>
+          <Link className="nav-link" to="/cart/">Cart <CartCount /> </Link>
         </NavItem>
         <NavItem>
           <Link className="nav-link" to="/checkout/">Checkout</Link>
+        </NavItem>
+        <NavItem>
+          <Link className="nav-link" to="/login/">Login</Link>
         </NavItem>
       </Nav>
     </Navbar>

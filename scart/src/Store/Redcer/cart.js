@@ -3,7 +3,7 @@ import { reactLocalStorage } from 'reactjs-localstorage';
 
 
 const iniitalState = {
-    cartitems: reactLocalStorage.getObject('cartItems').cartitems
+    cartitems: reactLocalStorage.getObject('cartItems').cartitems ? reactLocalStorage.getObject('cartItems').cartitems : {}
 }
 
 const cartReducer = (state = iniitalState, action) => {
