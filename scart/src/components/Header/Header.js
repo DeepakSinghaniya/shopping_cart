@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 const header = props => (
   <header>
-
     <Navbar color="light" light expand="md">
       <Link className='navbar-brand' to="/"><img src={logo} alt='site logo' title="Logo" width="50" />Shop</Link>
       <Nav className="ml-auto" navbar>

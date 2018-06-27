@@ -7,6 +7,7 @@ import Shop from './containers/Shop/Shop';
 import SingleProdcut from './containers/SingleProduct/SingleProdcut';
 import Cart from './containers/Cart/Cart';
 import Login from './containers/Login/Login';
+import Checkout from './containers/Checkout/Checkout';
 import './App.scss';
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
                   <Route exact path='/' component={Shop} />
                   <Route path='/products/:slug' component={SingleProdcut} />
                   <Route path='/cart' component={Cart} />
+                  <Route path='/checkout' component={Checkout} />
                   <Route path='/login' component={Login} />
                 </Switch>
               </Col>

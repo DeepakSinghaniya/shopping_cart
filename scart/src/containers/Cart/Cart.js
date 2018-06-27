@@ -18,9 +18,6 @@ class Cart extends Component {
                     <Row>
                         <Col md={12}>
                             <h1>Cart</h1>
-
-
-
                             <Table>
                                 <thead>
                                     <tr>
@@ -57,7 +54,9 @@ class Cart extends Component {
                         <Col md={{ size: 4, offset: 8 }}>
                             <h3>Cart totals</h3>
                             <h4>Total: ₹{totalPrice}</h4>
-                            <Button color='success'>Proceed to checkout</Button>
+                            <Button onClick={() => {
+                                this.props.history.push('/checkout/');
+                            }} color='success'>Proceed to checkout</Button>
                         </Col>
                     </Row>
                 </Fragment>
