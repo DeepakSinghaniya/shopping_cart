@@ -18,9 +18,9 @@ const header = props => (
         <NavItem>
           <Link className="nav-link" to="/checkout/">Checkout</Link>
         </NavItem>
-        <NavItem>
+        {/* <NavItem>
           <Link className="nav-link" to="/login/">Login</Link>
-        </NavItem>
+        </NavItem> */}
       </Nav>
     </Navbar>
 

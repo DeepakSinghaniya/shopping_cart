@@ -12,3 +12,6 @@ export const SET_PRODUCT_COUNT = 'SET_PRODUCT_COUNT';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
 export const CHANGE_NUMBER_OF_ITEMS = 'CHANGE_NUMBER_OF_ITEMS';
+export const FATCH_USER = 'FATCH_USER';
+export const CREATE_ORDER = 'CREATE_ORDER';
+export const EMPTY_CART = 'EMPTY_CART';

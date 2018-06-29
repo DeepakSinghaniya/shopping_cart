@@ -39,6 +39,13 @@ export const get = (path, data) => {
     return axiosInstance.get(path + '?' + queryString);
 }
 
-
+export const post = (path, data) => {  
+    request_data.data = { ...data };
+    request_data.method = 'POST';
+    request_data.url = BASE_URL+path;
+    const query = oauth.authorize(request_data);
+    //const queryString = stringify(query);
+    return axiosInstance.post(path,query);
+}
 
 export default axiosInstance;

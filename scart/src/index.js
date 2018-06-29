@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import shopReducer from './Store/Redcer/Shop';
 import filterReducer from './Store/Redcer/Filter';
 import cartReducer from './Store/Redcer/cart';
+import checkoutReducer from './Store/Redcer/checkout';
 import singleProductReducer from './Store/Redcer/SingleProduct';
 import registerServiceWorker from './registerServiceWorker';
 import { SHOW_LOADER, HIDE_LOADER } from './Store/Actions/actionsTypes';
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     shop: shopReducer,
     filter: filterReducer,
     sinPro: singleProductReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    checkout: checkoutReducer
 });
 
 const loader = store => next => action => {

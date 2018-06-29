@@ -1,5 +1,10 @@
-import { ADD_TO_CART, REMOVE_CART_ITEM, CHANGE_NUMBER_OF_ITEMS } from './actionsTypes';
+import { ADD_TO_CART, REMOVE_CART_ITEM, CHANGE_NUMBER_OF_ITEMS, EMPTY_CART } from './actionsTypes';
 
+export const emptyCart = () => {
+    return {
+        type: EMPTY_CART
+    }
+}
 export const addToCart = (data) => {
     return {
         type: ADD_TO_CART,

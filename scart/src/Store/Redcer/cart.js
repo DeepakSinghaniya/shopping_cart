@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_CART_ITEM, CHANGE_NUMBER_OF_ITEMS } from '../Actions/actionsTypes';
+import { ADD_TO_CART, REMOVE_CART_ITEM, CHANGE_NUMBER_OF_ITEMS, EMPTY_CART } from '../Actions/actionsTypes';
 import { reactLocalStorage } from 'reactjs-localstorage';
 
 
@@ -8,6 +8,11 @@ const iniitalState = {
 
 const cartReducer = (state = iniitalState, action) => {
     switch (action.type) {
+
+        case EMPTY_CART:
+            reactLocalStorage.setObject('cartItems', { ...state, cartitems: {} });
+            return { ...state, cartitems: {} };
+
         case ADD_TO_CART:
             reactLocalStorage.setObject('cartItems', { ...state, cartitems: { ...state.cartitems, ...action.payLoad } });
             return { ...state, cartitems: { ...state.cartitems, ...action.payLoad } };
